@@ -10,12 +10,12 @@ import university from '../../services/university';
 const Index = () => {
   const [universities, setUniversities] = useState({});
   const [loader, setLoader] = useState(false);
-  const [slotOpen, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [universityId, setUniversityId] = useState('');
 
-  const openUniversityModal = (slot_id) => {
-    setOpen(true);
-    setUniversityId(slot_id);
+  const openUniversityModal = (university_id) => {
+    setModalOpen(true);
+    setUniversityId(university_id);
   };
 
   const getUniversities = () => {
@@ -52,12 +52,10 @@ const Index = () => {
 
           toast.success(res?.data?.message, {
             position: 'top-right',
-            // position="top-right"
           });
         } else {
           toast.error(res?.data?.message, {
             position: 'top-right',
-            // position="top-right"
           });
         }
       });
@@ -80,7 +78,7 @@ const Index = () => {
           <Button color="warning" size="sm" className="mr-2">
             Search
           </Button> */}
-          <Button color="success" size="sm" onClick={() => setOpen(true)}>
+          <Button color="success" size="sm" onClick={() => setModalOpen(true)}>
             Add New
           </Button>
         </div>
@@ -96,20 +94,18 @@ const Index = () => {
               <Table.HeadCell>S.No</Table.HeadCell>
                 <Table.HeadCell>Image</Table.HeadCell>
                 <Table.HeadCell>Name</Table.HeadCell>
-                <Table.HeadCell>Slug</Table.HeadCell>
                 <Table.HeadCell>Created At</Table.HeadCell>
                 <Table.HeadCell>Action</Table.HeadCell>
               </Table.Head>
               <Table.Body className="divide-y">
                 {universities?.length > 0
-                  ? universities?.map((slot, index) => (
+                  ? universities?.map((university, index) => (
                       <University
-                        slot={slot}
+                      university={university}
                         index={index}
-                        key={`key-slot-${index}`}
+                        key={`key-university-${index}`}
                         openUniversityModal={openUniversityModal}
                         deleteUniversity={deleteUniversity}
-                        getUniversities={getUniversities}
                       />
                     ))
                   : !loader && (
@@ -124,11 +120,11 @@ const Index = () => {
           </div>
         )}
       </div>
-      {slotOpen && (
+      {modalOpen && (
         <AddEditUniversity
-          open={slotOpen}
+          open={modalOpen}
           handleClose={() => {
-            setOpen();
+            setModalOpen();
             setUniversityId(null);
           }}
           universityId={universityId}

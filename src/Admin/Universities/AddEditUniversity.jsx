@@ -10,13 +10,8 @@ import {
 } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import LoadingOverlay from '../../common/LoadingOverlay';
-import DatePicker, { DateObject } from 'react-multi-date-picker';
-import DatePanel from 'react-multi-date-picker/plugins/date_panel';
-// import "./styles.css";
-import moment from 'moment';
 import university from '../../services/university';
 import banner from '../../services/banner';
-const format = 'MM/DD/YYYY';
 
 const AddEditUniversity = (props) => {
   const [fields, setFields] = useState({});
@@ -159,12 +154,10 @@ const AddEditUniversity = (props) => {
   return (
     <div>
       <Modal show={props.open} size="lg" onClose={() => props.handleClose()}>
+      <form  onSubmit={handleSubmit}>
         <Modal.Header> {props.universityId ? 'Update ' : 'Add '}University</Modal.Header>
         <Modal.Body className="overflow-visible">
-          <form
-            className="flex max-w-md flex-col gap-4"
-            // onSubmit={handleSubmit}
-          >
+   
             <div className="relative w-full max-w-4xl max-h-full">
               <div className="relative">
                 <LoadingOverlay visible={loader} />
@@ -196,7 +189,7 @@ const AddEditUniversity = (props) => {
                   </div>
                   <FileInput
                     id="file-upload-helper-text"
-                    required
+                    // required
                     name="logo"
                     onChange={(event) => handleFileUpload(event, 'logo')}
                     helperText={
@@ -210,7 +203,7 @@ const AddEditUniversity = (props) => {
                       <div className="image-container relative inline-block">
                         <img
                           src={imagePreview ? imagePreview : fields?.logo}
-                          alt="govihub"
+                          alt="Drjlcitm"
                           style={{ height: '70px' }}
                           class="bg-cover bg-center"
                         />
@@ -231,7 +224,6 @@ const AddEditUniversity = (props) => {
              
               </div>
             </div>
-          </form>
         </Modal.Body>
         <Modal.Footer className="flex justify-end">
           <Button
@@ -246,7 +238,7 @@ const AddEditUniversity = (props) => {
             color="success"
             size="sm"
             type="submit"
-            onClick={handleSubmit}
+           
           >
             {' '}
             {loading ? (
@@ -259,9 +251,11 @@ const AddEditUniversity = (props) => {
             ) : (
               ''
             )}
-            Add
+           {props.universityId ? 'Update ' : 'Add '}
           </Button>
         </Modal.Footer>
+        </form>
+
       </Modal>
     </div>
   );

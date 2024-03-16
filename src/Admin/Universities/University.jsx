@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Badge, Table, ToggleSwitch } from 'flowbite-react';
+import React from 'react';
+import {Table} from 'flowbite-react';
 import moment from 'moment';
 
 
 const University = (props) => {
-  const course = props.slot;
+  const course = props.university;
 
 
 
@@ -19,23 +19,22 @@ const University = (props) => {
         )}
       </Table.Cell>
 
-      <Table.Cell>{course.name}</Table.Cell>
-      <Table.Cell>{course.slug}</Table.Cell>
-      <Table.Cell>
+      <Table.Cell>{course?.name ?? "N/A"}</Table.Cell>
+
         <Table.Cell>
           {moment(course?.createdAt).format('D MMM,  YYYY')}
         </Table.Cell>
-      </Table.Cell>
+
 
       <Table.Cell>
         <i
           className="fa-solid fa-pen-to-square cursor-pointer"
-          onClick={() => props.openUniversityModal(course.id)}
+          onClick={() => props.openUniversityModal(course?.id)}
         ></i>{' '}
         &nbsp;
         <i
           className="fa-solid fa-trash cursor-pointer"
-          onClick={() => props.deleteUniversity(course.id)}
+          onClick={() => props.deleteUniversity(course?.id)}
         ></i>
       </Table.Cell>
     </Table.Row>

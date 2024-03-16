@@ -4,7 +4,6 @@ import {
   FileInput,
   Label,
   Modal,
-  Select,
   Spinner,
   TextInput,
 } from 'flowbite-react';
@@ -19,7 +18,6 @@ const AddEditCourse = (props) => {
   const [errors, setErrors] = useState({});
   const [loader, setLoader] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [dates, setDates] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
   const [file, setFile] = useState(null);
 
@@ -152,20 +150,20 @@ const AddEditCourse = (props) => {
   };
 
   useEffect(() => {
-    if (props.slotId) {
-      getCourse(props.slotId);
+    if (props.modalId) {
+      getCourse(props.modalId);
     }
   }, []);
 
   return (
     <div>
       <Modal show={props.open} size="lg" onClose={() => props.handleClose()}>
+        <form onSubmit={handleSubmit}>
           <Modal.Header>
             {' '}
             {props.slotId ? 'Update ' : 'Add '}Course
           </Modal.Header>
           <Modal.Body className="overflow-visible">
-        <form className="flex max-w-md flex-col gap-4">
             <div className="relative w-full max-w-4xl max-h-full">
               <div className="relative">
                 <LoadingOverlay visible={loader} />
@@ -215,7 +213,7 @@ const AddEditCourse = (props) => {
                   </div>
                   <FileInput
                     id="file-upload-helper-text"
-                    required
+                    // required
                     name="image"
                     onChange={(event) => handleFileUpload(event, 'image')}
                     helperText={
@@ -229,7 +227,7 @@ const AddEditCourse = (props) => {
                       <div className="image-container relative inline-block">
                         <img
                           src={imagePreview ? imagePreview : fields?.image}
-                          alt="govihub"
+                          alt="Drjlcitm"
                           style={{ height: '70px' }}
                           class="bg-cover bg-center"
                         />
@@ -244,12 +242,9 @@ const AddEditCourse = (props) => {
                       </div>
                     </div>
                   ) : null}
-
-
                 </div>
               </div>
             </div>
-            </form>
           </Modal.Body>
           <Modal.Footer className="flex justify-end">
             <Button
@@ -260,12 +255,7 @@ const AddEditCourse = (props) => {
             >
               Cancel
             </Button>
-            <Button
-              color="success"
-              size="sm"
-              type="submit"
-              onClick={handleSubmit}
-            >
+            <Button color="success" size="sm" type="submit">
               {' '}
               {loading ? (
                 <Spinner
@@ -277,10 +267,10 @@ const AddEditCourse = (props) => {
               ) : (
                 ''
               )}
-             {props.slotId ? 'Update ' : 'Add '}
+              {props.modalId ? 'Update ' : 'Add '}
             </Button>
           </Modal.Footer>
-   
+        </form>
       </Modal>
     </div>
   );

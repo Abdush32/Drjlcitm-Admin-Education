@@ -126,12 +126,10 @@ const AddEditCourse = (props) => {
   return (
     <div className="h-screen">
       <Modal  show={props.open} size="lg" onClose={() => props.handleClose()}>
+      <form onSubmit={handleSubmit}>
         <Modal.Header> {props.bannerId ? 'Update ' : 'Add '}Banner</Modal.Header>
         <Modal.Body className="overflow-visible">
-          <form
-            className="flex max-w-md flex-col gap-4"
-            onSubmit={handleSubmit}
-          >
+       
             <div className="relative w-full max-w-4xl max-h-full">
               <div className="relative">
                 <LoadingOverlay visible={loader} />
@@ -157,8 +155,8 @@ const AddEditCourse = (props) => {
                       <div className="image-container relative inline-block">
                         <img
                           src={imagePreview ? imagePreview : fields?.image}
-                          alt="govihub"
-                          class="bg-cover bg-center"
+                          alt="Drjlcitm"
+                          className="min-h-64 max-w-xs"
                         />
                         {imagePreview || fields.image ? (
                           <span
@@ -174,7 +172,6 @@ const AddEditCourse = (props) => {
                 </div>
               </div>
             </div>
-          </form>
         </Modal.Body>
         <Modal.Footer className="flex justify-end">
           <Button
@@ -202,9 +199,11 @@ const AddEditCourse = (props) => {
             ) : (
               ''
             )}
-            Add
+           {props.bannerId ? 'Update ' : 'Add '}
           </Button>
         </Modal.Footer>
+        </form>
+
       </Modal>
     </div>
   );

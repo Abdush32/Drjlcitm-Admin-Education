@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Badge, Table, ToggleSwitch } from 'flowbite-react';
 import moment from 'moment';
 
-
 const Course = (props) => {
   const course = props.course;
-
-
 
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -19,23 +16,20 @@ const Course = (props) => {
         )}
       </Table.Cell>
 
-      <Table.Cell>{course.name}</Table.Cell>
-      <Table.Cell>{course.slug}</Table.Cell>
+      <Table.Cell>{course?.name ?? "N/A"}</Table.Cell>
       <Table.Cell>
-        <Table.Cell>
-          {moment(course?.createdAt).format('D MMM,  YYYY')}
-        </Table.Cell>
+        {moment(course?.createdAt).format('D MMM,  YYYY')}
       </Table.Cell>
 
       <Table.Cell>
         <i
           className="fa-solid fa-pen-to-square cursor-pointer"
-          onClick={() => props.openCourseModal(course.id)}
+          onClick={() => props.openCourseModal(course?.id)}
         ></i>{' '}
         &nbsp;
         <i
           className="fa-solid fa-trash cursor-pointer"
-          onClick={() => props.deleteCourse(course.id)}
+          onClick={() => props.deleteCourse(course?.id)}
         ></i>
       </Table.Cell>
     </Table.Row>

@@ -10,12 +10,12 @@ import course from '../../services/course';
 const Index = () => {
   const [courses, setCourses] = useState({});
   const [loader, setLoader] = useState(false);
-  const [slotOpen, setSlotOpen] = useState(false);
-  const [slotId, setSlotId] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalId, setModalId] = useState('');
 
-  const openCourseModal = (slot_id) => {
-    setSlotOpen(true);
-    setSlotId(slot_id);
+  const openCourseModal = (course_id) => {
+    setModalOpen(true);
+    setModalId(course_id);
   };
 
   const getCourses = () => {
@@ -48,12 +48,10 @@ const Index = () => {
 
           toast.success(res?.data?.message, {
             position: 'top-right',
-            // position="top-right"
           });
         } else {
           toast.error(res?.data?.message, {
             position: 'top-right',
-            // position="top-right"
           });
         }
       });
@@ -61,8 +59,10 @@ const Index = () => {
   };
 
   useEffect(() => {
+    console.log("useEffect is being called");
     getCourses();
   }, []);
+  
 
   return (
     <div>
@@ -76,7 +76,7 @@ const Index = () => {
           <Button color="warning" size="sm" className="mr-2">
             Search
           </Button> */}
-          <Button color="success" size="sm" onClick={() => setSlotOpen(true)}>
+          <Button color="success" size="sm" onClick={() => setModalOpen(true)}>
             Add New
           </Button>
         </div>
@@ -92,7 +92,6 @@ const Index = () => {
                 <Table.HeadCell>S.No</Table.HeadCell>
                 <Table.HeadCell>Image</Table.HeadCell>
                 <Table.HeadCell>Name</Table.HeadCell>
-                <Table.HeadCell>Slug</Table.HeadCell>
                 <Table.HeadCell>Created At</Table.HeadCell>
                 <Table.HeadCell>Action</Table.HeadCell>
               </Table.Head>
@@ -105,7 +104,6 @@ const Index = () => {
                         key={`key-course-${index}`}
                         openCourseModal={openCourseModal}
                         deleteCourse={deleteCourse}
-                        getCourses={getCourses}
                       />
                     ))
                   : !loader && (
@@ -120,15 +118,14 @@ const Index = () => {
           </div>
         )}
       </div>
-      {slotOpen && (
+      {modalOpen && (
         <AddEditCourse
-          open={slotOpen}
+          open={modalOpen}
           handleClose={() => {
-            setSlotOpen();
-            setSlotId(null);
+            setModalOpen();
+            setModalId(null);
           }}
-          slotId={slotId}
-          getCourses={getCourses}
+          modalId={modalId}
         />
       )}
     </div>
