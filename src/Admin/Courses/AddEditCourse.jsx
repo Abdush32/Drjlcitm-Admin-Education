@@ -112,8 +112,8 @@ const AddEditCourse = (props) => {
               position: 'top-right',
             });
             setFields({});
-            props.getCourses();
             props.handleClose();
+            props.getCourses();
           } else {
             let errors = {};
             for (let key in res.data.errors) {

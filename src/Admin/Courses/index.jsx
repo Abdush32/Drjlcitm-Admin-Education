@@ -6,12 +6,14 @@ import Course from './Course';
 import toast from 'react-hot-toast';
 import Skeleton from '../../common/Skelton';
 import course from '../../services/course';
+import { Pagination } from 'flowbite-react';
 
 const Index = () => {
   const [courses, setCourses] = useState({});
   const [loader, setLoader] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalId, setModalId] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const openCourseModal = (course_id) => {
     setModalOpen(true);
@@ -42,7 +44,8 @@ const Index = () => {
     if (window.confirm('Are you sure to delete this course?')) {
       course.Delete(id).then((res) => {
         if (res?.data?.status) {
-  
+
+
           const newSlot = courses.filter((item) => item.id !== id);
           setCourses(newSlot);
 
@@ -58,11 +61,11 @@ const Index = () => {
     }
   };
 
+  const onPageChange = (page) => setCurrentPage(page);
+
   useEffect(() => {
-    console.log("useEffect is being called");
     getCourses();
   }, []);
-  
 
   return (
     <div>
@@ -97,7 +100,7 @@ const Index = () => {
               </Table.Head>
               <Table.Body className="divide-y">
                 {courses?.length > 0
-                  ? courses?.map((course, index) => (
+                  ?courses?.map((course, index) => (
                       <Course
                         course={course}
                         index={index}
@@ -115,9 +118,20 @@ const Index = () => {
                     )}
               </Table.Body>
             </Table>
+
+            {/* <div className="flex overflow-x-auto sm:justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={100}
+                onPageChange={onPageChange}
+              />
+            </div> */}
+
+            
           </div>
         )}
       </div>
+
       {modalOpen && (
         <AddEditCourse
           open={modalOpen}
@@ -126,6 +140,7 @@ const Index = () => {
             setModalId(null);
           }}
           modalId={modalId}
+          getCourses={getCourses}
         />
       )}
     </div>
